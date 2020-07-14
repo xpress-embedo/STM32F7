@@ -19,3 +19,7 @@
 *.dbgdt
 *.dnx
 *.wsdt
+
+#Sublime Project and Sublime Workspace
+*.sublime-project
+*.sublime-workspace
