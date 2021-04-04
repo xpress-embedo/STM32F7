@@ -1,0 +1,31 @@
+# IAR Output Files
+*.hex
+*.out
+*.sim
+*.map
+*.pbi
+*.pbd
+*.pbd.browse
+*.pbd.linf
+*.o
+*.xcl
+
+# IAR Files
+*.dep
+*.ewd
+*.cspy.bat
+*.cspy.ps1
+*.crun
+*.dbgdt
+*.dnx
+*.wsdt
+
+# STM32CubeIDE Workspace
+*.metadata
+*.settings
+*.launch
+Debug
+
+#Sublime Project and Sublime Workspace
+*.sublime-project
+*.sublime-workspace
