@@ -1,0 +1,51 @@
+[
+    {
+        "id": "4183ce60.e9648",
+        "type": "ui_led",
+        "z": "8556ee3.cecab1",
+        "group": "f9c34dde.1e2f4",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "right",
+        "labelAlignment": "right",
+        "colorForValue": [
+            {
+                "color": "gray",
+                "value": "1",
+                "valueType": "num"
+            },
+            {
+                "color": "green",
+                "value": "0",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "Green Led",
+        "x": 910,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f9c34dde.1e2f4",
+        "type": "ui_group",
+        "z": "",
+        "name": "Led Blink",
+        "tab": "17d09b07.741a55",
+        "order": 1,
+        "disp": true,
+        "width": "10",
+        "collapse": false
+    },
+    {
+        "id": "17d09b07.741a55",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

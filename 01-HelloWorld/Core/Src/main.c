@@ -36,7 +36,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define LED_1_TASK_TIME       1000u   /* In milliseconds */
+#define LED_1_TASK_TIME       2000u   /* In milliseconds */
 #define LED_2_TASK_TIME       1000u   /* In milliseconds */
 /* USER CODE END PM */
 
