@@ -18,3 +18,7 @@ Whenever this interrupt is triggered, a variable is set, which is used to toggle
 
 The following is the gif image of the working demo, which is prepared using CubeMonitor Software.  
 ![](./../Others/01-HelloWorld.gif)
+
+#### UART
+STM32F7-DISCO USART1 can be used as Virtual COM port for PC, **but make sure to use the correct USART1 pins, by default PA9 and PA10 pins are not assigned by CubeMX software and this needs to be manually change** .  
+* `HAL_UART_Transmit` function is used to transmit data over UART.  
