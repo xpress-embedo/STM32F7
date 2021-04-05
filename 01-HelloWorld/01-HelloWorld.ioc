@@ -129,6 +129,7 @@ NVIC.PriorityGroup=NVIC_PRIORITYGROUP_4
 RCC.CECFreq_Value=32786.88524590164
 NVIC.BusFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false
 PJ13.GPIOParameters=GPIO_Label
+NVIC.USART1_IRQn=true\:0\:0\:false\:false\:true\:true\:true
 RCC.SDMMC2Freq_Value=16000000
 ProjectManager.CustomerFirmwarePackage=
 ProjectManager.DeviceId=STM32F769NIHx

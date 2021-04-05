@@ -54,6 +54,8 @@ uint8_t led_3_toggle = FALSE;
 uint32_t led_1_timestamp = 0u;
 uint32_t led_2_timestamp = 0u;
 uint32_t dbg_uart_timestamp = 0u;
+
+uint8_t rx_data = 0u;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -102,6 +104,8 @@ int main(void)
   led_1_timestamp = HAL_GetTick();
   led_2_timestamp = HAL_GetTick();
   dbg_uart_timestamp = HAL_GetTick();
+
+  HAL_UART_Receive_IT(&huart1, &rx_data, 1u);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -182,7 +186,8 @@ int main(void)
       uint8_t text[] = "Hello World from STM32F7\r\n";
       dbg_uart_timestamp = HAL_GetTick();
       // NOTE: length is sizeof(text)-1, else NULL character will also be transmitted, which is not needed
-      if( HAL_UART_Transmit(&huart1, text, (sizeof(text)-1u), 1000u) != HAL_OK )
+      // if( HAL_UART_Transmit(&huart1, text, (sizeof(text)-1u), 1000u) != HAL_OK )
+      if( HAL_UART_Transmit_IT(&huart1, text, (sizeof(text)-1u) ) != HAL_OK )
       {
         /*--All HAL functions returns HAL_OK, if not call Erro Handler function for analysis of fault--*/
         Error_Handler();
@@ -336,6 +341,23 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     /*--NOTE: there is no need to clear the flags as they are already cleared in the previous functions--*/
   }
 }
+
+/**
+  * @brief  Rx Transfer completed callback.
+  * @param  huart UART handle.
+  * @retval None
+  */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(huart);
+  if (huart->Instance == USART1)
+  {
+    HAL_UART_Transmit_IT(huart, &rx_data, 1u );
+    HAL_UART_Receive_IT(huart, &rx_data, 1u );
+  }
+}
+
 /* USER CODE END 4 */
 
 /**
