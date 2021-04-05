@@ -38,7 +38,6 @@
 /* USER CODE BEGIN PM */
 #define LED_1_TASK_TIME       2000u   /* In milliseconds */
 #define LED_2_TASK_TIME       1000u   /* In milliseconds */
-#define LED_3_TASK_TIME       500u    /* In milliseconds */
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -47,9 +46,10 @@
 uint8_t led_1_state = FALSE;
 uint8_t led_2_state = FALSE;
 uint8_t led_3_state = FALSE;
+uint8_t led_3_toggle = FALSE;
+
 uint32_t led_1_timestamp = 0u;
 uint32_t led_2_timestamp = 0u;
-uint32_t led_3_timestamp = 0u;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -95,7 +95,6 @@ int main(void)
   /* USER CODE BEGIN 2 */
   led_1_timestamp = HAL_GetTick();
   led_2_timestamp = HAL_GetTick();
-  led_3_timestamp = HAL_GetTick();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -127,13 +126,13 @@ int main(void)
       {
         led_1_state = FALSE;
         /* Setting Pin High will turn off the Led */
-        HAL_GPIO_WritePin( LD1_GPIO_Port, LD1_Pin, GPIO_PIN_SET );
+        HAL_GPIO_WritePin( LD1_GPIO_Port, LD1_Pin, GPIO_PIN_RESET );
       }
       else
       {
         led_1_state = TRUE;
         /* Setting Pin Low will turn on the Led */
-        HAL_GPIO_WritePin( LD1_GPIO_Port, LD1_Pin, GPIO_PIN_RESET );
+        HAL_GPIO_WritePin( LD1_GPIO_Port, LD1_Pin, GPIO_PIN_SET );
       }
     }
     /* Task for Led 2 */
@@ -144,30 +143,30 @@ int main(void)
       {
         led_2_state = FALSE;
         /* Setting Pin High will turn off the Led */
-        HAL_GPIO_WritePin( LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET );
+        HAL_GPIO_WritePin( LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET );
       }
       else
       {
         led_2_state = TRUE;
         /* Setting Pin Low will turn on the Led */
-        HAL_GPIO_WritePin( LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET );
+        HAL_GPIO_WritePin( LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET );
       }
     }
-    /* Task for Led 3 */
-    if( HAL_GetTick() - led_3_timestamp > LED_3_TASK_TIME )
+    /*--External Interrupt Example, led_3_toggle variable is set inside the EXT Interrupt  --*/
+    if( led_3_toggle == TRUE )
     {
-      led_3_timestamp = HAL_GetTick();
+      led_3_toggle = FALSE;
+      /*--Below Function can be used directly, but to display on CubeMonitor, I am using this method--*/
+      // HAL_GPIO_TogglePin( LD3_GPIO_Port, LD3_Pin );
       if( led_3_state )
       {
         led_3_state = FALSE;
-        /* Setting Pin High will turn off the Led */
-        HAL_GPIO_WritePin( LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET );
+        HAL_GPIO_WritePin( LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET );
       }
       else
       {
         led_3_state = TRUE;
-        /* Setting Pin Low will turn on the Led */
-        HAL_GPIO_WritePin( LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET );
+        HAL_GPIO_WritePin( LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET );
       }
     }
   }
@@ -246,10 +245,36 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD3_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : BLUE_BUTTON_Pin */
+  GPIO_InitStruct.Pin = BLUE_BUTTON_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(BLUE_BUTTON_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
 }
 
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  EXTI line detection callbacks.
+  * @param  GPIO_Pin Specifies the pins connected EXTI line
+  * @retval None
+  */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(GPIO_Pin);
 
+  if( GPIO_Pin == BLUE_BUTTON_Pin )
+  {
+    /*--Set this flag to toggle the LD3 on the board, whenever button is pressed--*/
+    led_3_toggle = TRUE;
+    /*--NOTE: there is no need to clear the flags as they are already cleared in the previous functions--*/
+  }
+}
 /* USER CODE END 4 */
 
 /**

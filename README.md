@@ -8,7 +8,7 @@ Four LEDs located top side are available for the user. From left to right the LE
 To light a LED a low-logic state 0 should be written in the corresponding GPIO register.  
 | Reference | Color | Name | Comment |
 | --------- | ----- | ---- | ------- |
-| B1 | BLUE | USER | Alternate Function Wake-Up |
+| B1 | BLUE | USER | Alternate Function Wake-Up PA0 of Micro |
 | B2 | BLACK | RESET | - |
 | LD1 | RED | USER1 | PJ13 Pin of micro |
 | LD2 | GREEN | USER2 | PJ5 Pin of micro |
