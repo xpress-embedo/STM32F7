@@ -12,3 +12,4 @@ To light a LED a low-logic state 0 should be written in the corresponding GPIO r
 | B2 | BLACK | RESET | - |
 | LD1 | RED | USER1 | PJ13 Pin of micro |
 | LD2 | GREEN | USER2 | PJ5 Pin of micro |
+| LD3 | GREEN | Arduino | PA12 Pin of micro |

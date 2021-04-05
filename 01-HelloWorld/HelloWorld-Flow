@@ -1,5 +1,179 @@
 [
     {
+        "id": "8556ee3.cecab1",
+        "type": "tab",
+        "label": "Led Blink",
+        "disabled": false,
+        "info": "Led Blink Example Simple Flow"
+    },
+    {
+        "id": "ac3040a6.b77f7",
+        "type": "acquisition out",
+        "z": "8556ee3.cecab1",
+        "name": "STM32F7_STLink_ProbeOut",
+        "probeconfig": "ecf5967a.3c6aa8",
+        "x": 600,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "c739a4c6.f27788",
+        "type": "acquisition in",
+        "z": "8556ee3.cecab1",
+        "name": "STM32F7_STLink_ProbeIn",
+        "probeconfig": "ecf5967a.3c6aa8",
+        "x": 130,
+        "y": 280,
+        "wires": [
+            [
+                "71c4116d.3cea7"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d3b25f71.a36ae",
+        "type": "variables",
+        "z": "8556ee3.cecab1",
+        "groupname": "LedState",
+        "accesspoint": 0,
+        "execonfig": "eeb83bc7.c255f8",
+        "variablelist": [],
+        "triggerstartmode": "manual",
+        "triggername": "led_1_state",
+        "triggerthreshold": "30000",
+        "frequency": "",
+        "frequencyType": "1",
+        "snapshotheader": "",
+        "mode": "direct",
+        "lastImportedTime": 1617618843826,
+        "openStatus": true,
+        "x": 340,
+        "y": 120,
+        "wires": [
+            [
+                "ac3040a6.b77f7"
+            ]
+        ]
+    },
+    {
+        "id": "c4309da1.b2a82",
+        "type": "ui_button",
+        "z": "8556ee3.cecab1",
+        "name": "",
+        "group": "f9c34dde.1e2f4",
+        "order": 1,
+        "width": "5",
+        "height": 1,
+        "passthru": false,
+        "label": "START Acquisition",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "start",
+        "x": 110,
+        "y": 80,
+        "wires": [
+            [
+                "d3b25f71.a36ae"
+            ]
+        ]
+    },
+    {
+        "id": "33887f87.2f138",
+        "type": "ui_button",
+        "z": "8556ee3.cecab1",
+        "name": "",
+        "group": "f9c34dde.1e2f4",
+        "order": 2,
+        "width": "5",
+        "height": 1,
+        "passthru": true,
+        "label": "STOP Acquisition",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "stop",
+        "x": 110,
+        "y": 160,
+        "wires": [
+            [
+                "d3b25f71.a36ae"
+            ]
+        ]
+    },
+    {
+        "id": "71c4116d.3cea7",
+        "type": "processing",
+        "z": "8556ee3.cecab1",
+        "groupname": "LedState",
+        "groupid": "966082b.1bac28",
+        "expressions": [],
+        "statistics": [],
+        "logmode": "no",
+        "x": 340,
+        "y": 280,
+        "wires": [
+            [
+                "7ebd2201.269bdc",
+                "8a1c696a.bb1898",
+                "542c57d5.974a88"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f2ba09b.c0b2ef8",
+        "type": "ui_led",
+        "z": "8556ee3.cecab1",
+        "group": "f9c34dde.1e2f4",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "red",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "gray",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "Red Led",
+        "x": 900,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "7ebd2201.269bdc",
+        "type": "function",
+        "z": "8556ee3.cecab1",
+        "name": "Get_Red_Led_State",
+        "func": "if (msg.payload.variablename == \"led_1_state\")\n{\n    msg.payload = msg.payload.variabledata[0].y\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 220,
+        "wires": [
+            [
+                "f2ba09b.c0b2ef8"
+            ]
+        ]
+    },
+    {
         "id": "4183ce60.e9648",
         "type": "ui_led",
         "z": "8556ee3.cecab1",
@@ -27,6 +201,151 @@
         "x": 910,
         "y": 300,
         "wires": []
+    },
+    {
+        "id": "8a1c696a.bb1898",
+        "type": "function",
+        "z": "8556ee3.cecab1",
+        "name": "Get_Green_Led_State",
+        "func": "if (msg.payload.variablename == \"led_2_state\")\n{\n    msg.payload = msg.payload.variabledata[0].y\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 300,
+        "wires": [
+            [
+                "4183ce60.e9648"
+            ]
+        ]
+    },
+    {
+        "id": "542c57d5.974a88",
+        "type": "function",
+        "z": "8556ee3.cecab1",
+        "name": "Get_Green_Led_State",
+        "func": "if (msg.payload.variablename == \"led_3_state\")\n{\n    msg.payload = msg.payload.variabledata[0].y\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 380,
+        "wires": [
+            [
+                "41edc840.d72598"
+            ]
+        ]
+    },
+    {
+        "id": "41edc840.d72598",
+        "type": "ui_led",
+        "z": "8556ee3.cecab1",
+        "group": "f9c34dde.1e2f4",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "label": "",
+        "labelPlacement": "right",
+        "labelAlignment": "right",
+        "colorForValue": [
+            {
+                "color": "gray",
+                "value": "1",
+                "valueType": "num"
+            },
+            {
+                "color": "green",
+                "value": "0",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "name": "Green Led",
+        "x": 910,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ecf5967a.3c6aa8",
+        "type": "probe",
+        "z": "",
+        "probeid": "066EFF504955857567162721",
+        "probename": "ST-Link v2-1B (...62721)",
+        "protocol": "SWD",
+        "frequency": "1.8 MHz - Default",
+        "probeproperty": "{\"SWD\":[\"4.6 MHz\",\"1.8 MHz - Default\",\"950 kHz\",\"400 kHz\",\"150 kHz\"],\"JTAG\":[\"18 MHz\",\"9 MHz\",\"4.5 MHz\",\"2.25 MHz\",\"1.12 MHz - Default\",\"560 kHz\",\"280 kHz\",\"140 kHz\"]}",
+        "probeversion": "ST Link firmware version V2.J36",
+        "connectionType": "p2p"
+    },
+    {
+        "id": "eeb83bc7.c255f8",
+        "type": "exe-config",
+        "z": "",
+        "name": "LedState",
+        "exefile": "D:\\Projects\\Embedded\\ST\\STM32F7\\01-HelloWorld\\Debug\\01-HelloWorld.elf",
+        "exefolder": "D:\\Projects\\Embedded\\ST\\STM32F7\\01-HelloWorld\\Debug",
+        "exevariablelist": [
+            {
+                "address": "0x08001804",
+                "name": "AHBPrescTable[0]",
+                "type": 1
+            },
+            {
+                "address": "0x20000028",
+                "name": "led_1_state",
+                "type": 1,
+                "checked": true
+            },
+            {
+                "address": "0x2000002c",
+                "name": "led_1_timestamp",
+                "type": 5
+            },
+            {
+                "address": "0x20000029",
+                "name": "led_2_state",
+                "type": 1,
+                "checked": true
+            },
+            {
+                "address": "0x20000030",
+                "name": "led_2_timestamp",
+                "type": 5
+            },
+            {
+                "address": "0x2000002a",
+                "name": "led_3_state",
+                "type": 1,
+                "checked": true
+            },
+            {
+                "address": "0x20000034",
+                "name": "led_3_timestamp",
+                "type": 5
+            },
+            {
+                "address": "0x20000000",
+                "name": "SystemCoreClock",
+                "type": 5
+            },
+            {
+                "address": "0x20000038",
+                "name": "uwTick",
+                "type": 5
+            },
+            {
+                "address": "0x20000008",
+                "name": "uwTickFreq",
+                "type": 2
+            },
+            {
+                "address": "0x20000004",
+                "name": "uwTickPrio",
+                "type": 5
+            }
+        ],
+        "expand": false,
+        "filename": "01-HelloWorld.elf",
+        "exeModifiedTime": 1617618764117,
+        "configLastUpdate": 1617618843507
     },
     {
         "id": "f9c34dde.1e2f4",

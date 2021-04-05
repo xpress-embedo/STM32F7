@@ -38,6 +38,7 @@
 /* USER CODE BEGIN PM */
 #define LED_1_TASK_TIME       2000u   /* In milliseconds */
 #define LED_2_TASK_TIME       1000u   /* In milliseconds */
+#define LED_3_TASK_TIME       500u    /* In milliseconds */
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -45,8 +46,10 @@
 /* USER CODE BEGIN PV */
 uint8_t led_1_state = FALSE;
 uint8_t led_2_state = FALSE;
+uint8_t led_3_state = FALSE;
 uint32_t led_1_timestamp = 0u;
 uint32_t led_2_timestamp = 0u;
+uint32_t led_3_timestamp = 0u;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -92,6 +95,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   led_1_timestamp = HAL_GetTick();
   led_2_timestamp = HAL_GetTick();
+  led_3_timestamp = HAL_GetTick();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -147,6 +151,23 @@ int main(void)
         led_2_state = TRUE;
         /* Setting Pin Low will turn on the Led */
         HAL_GPIO_WritePin( LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET );
+      }
+    }
+    /* Task for Led 3 */
+    if( HAL_GetTick() - led_3_timestamp > LED_3_TASK_TIME )
+    {
+      led_3_timestamp = HAL_GetTick();
+      if( led_3_state )
+      {
+        led_3_state = FALSE;
+        /* Setting Pin High will turn off the Led */
+        HAL_GPIO_WritePin( LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET );
+      }
+      else
+      {
+        led_3_state = TRUE;
+        /* Setting Pin Low will turn on the Led */
+        HAL_GPIO_WritePin( LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET );
       }
     }
   }
@@ -208,12 +229,22 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOJ, LD1_Pin|LD2_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pins : LD1_Pin LD2_Pin */
   GPIO_InitStruct.Pin = LD1_Pin|LD2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOJ, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : LD3_Pin */
+  GPIO_InitStruct.Pin = LD3_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LD3_GPIO_Port, &GPIO_InitStruct);
 
 }
 
