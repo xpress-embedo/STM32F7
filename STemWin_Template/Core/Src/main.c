@@ -21,7 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-static void CPU_CACHE_Enable(void);
+#include "WM.h"
+#include "GUI.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -54,7 +55,7 @@ static void MX_GPIO_Init(void);
 static void MX_CRC_Init(void);
 static void MX_DMA2D_Init(void);
 /* USER CODE BEGIN PFP */
-
+static void CPU_CACHE_Enable(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -87,6 +88,14 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
+  // Initialize the STemWin GUI Library
+  BSP_SDRAM_Init();           // Initializes the SDRAM Device
+  __HAL_RCC_CRC_CLK_ENABLE(); // Enable the CRC Module
+
+  GUI_Init();
+
+  // Enable the Windo Manager Multi-Buffering
+  WM_MULTIBUF_ENABLE(1);
 
   /* USER CODE END SysInit */
 
