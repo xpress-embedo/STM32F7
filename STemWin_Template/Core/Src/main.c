@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+static void CPU_CACHE_Enable(void);
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -69,6 +69,8 @@ static void MX_DMA2D_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+  // Enable the CPU Cache
+  CPU_CACHE_Enable();
 
   /* USER CODE END 1 */
 
@@ -256,6 +258,19 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  CPU L1-Cache enable.
+  * @param  None
+  * @retval None
+  */
+static void CPU_CACHE_Enable(void)
+{
+  /* Enable I-Cache */
+  SCB_EnableICache();
+
+  /* Enable D-Cache */
+  SCB_EnableDCache();
+}
 
 /* USER CODE END 4 */
 

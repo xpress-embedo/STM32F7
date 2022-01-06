@@ -31,7 +31,12 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "GUI.h"
 
+/* EVAL includes component */
+#include "stm32f769i_discovery.h"
+#include "stm32f769i_discovery_lcd.h"
+#include "stm32f769i_discovery_sdram.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
