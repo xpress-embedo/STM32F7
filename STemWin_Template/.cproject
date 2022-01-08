@@ -45,16 +45,23 @@
 									<listOptionValue builtIn="false" value="USE_STM32F769I_DISCO"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths.717825015" name="Include paths (-I)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.option.includepaths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="/STemWin_Template/Middlewares/ST/STemWin/inc"/>
 									<listOptionValue builtIn="false" value="../Core/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32F7xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32F7xx/Include"/>
-									<listOptionValue builtIn="false" value="/STemWin_Template/Middlewares/ST/STemWin/OS"/>
-									<listOptionValue builtIn="false" value="/STemWin_Template/STemWin_Config"/>
-									<listOptionValue builtIn="false" value="/STemWin_Template/Drivers/BSP/Components"/>
-									<listOptionValue builtIn="false" value="/STemWin_Template/Drivers/BSP/STM32F769i_Discovery"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/STM32F769i_Discovery"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/adv7533"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/Common"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/ft6x06"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/mx25l512"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/otm8009a"/>
+									<listOptionValue builtIn="false" value="../Drivers/BSP/Components/wm8994"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/STemWin/inc"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/STemWin/OS"/>
+									<listOptionValue builtIn="false" value="../STemWin_Config"/>
+									<listOptionValue builtIn="false" value="../Utilities/Fonts"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.484470277" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -65,7 +72,7 @@
 							<tool id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.63391247" name="MCU GCC Linker" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker">
 								<option id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script.1049948046" name="Linker Script (-T)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.script" value="${workspace_loc:/${ProjName}/STM32F769NIHX_FLASH.ld}" valueType="string"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.directories.852919563" name="Library search path (-L)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.directories" valueType="libPaths">
-									<listOptionValue builtIn="false" value="/STemWin_Template/Middlewares/ST/STemWin/Lib"/>
+									<listOptionValue builtIn="false" value="../Middlewares/ST/STemWin/Lib"/>
 								</option>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.libraries.944077853" name="Libraries (-l)" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.linker.option.libraries" valueType="libs">
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value=":STemWin_CM7_wc32_ARGB.a"/>
@@ -87,7 +94,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Drivers/BSP/STM32F769i_Discovery/stm32f769i_discovery_lcd.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

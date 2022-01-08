@@ -94,7 +94,7 @@ int main(void)
   GUI_Init();
 
   // Enable the Windo Manager Multi-Buffering
-  WM_MULTIBUF_ENABLE(1);
+  WM_MULTIBUF_Enable(1);
 
   /* USER CODE END SysInit */
 
@@ -110,6 +110,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_RESET);
+
+  GUI_Clear();
+  GUI_SetFont(&GUI_Font32_1);
+  GUI_DispString("Hello World\r\n");
+  GUI_DispString("Working on STM32CUBEIDE\r\n");
+  GUI_Delay(100);
+  GUI_DispString("Using STM32F7 Discovery Board\r\n");
   while (1)
   {
     /* USER CODE END WHILE */

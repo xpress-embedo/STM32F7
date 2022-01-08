@@ -29,3 +29,6 @@ Debug
 #Sublime Project and Sublime Workspace
 *.sublime-project
 *.sublime-workspace
+
+#Don't commit Example Project
+/STemWin_helloworld/
