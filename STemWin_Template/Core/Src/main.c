@@ -93,14 +93,14 @@ int main(void)
 
   GUI_Init();
 
-  // Enable the Windo Manager Multi-Buffering
+  // Enable the Window Manager Multi-Buffering
   WM_MULTIBUF_Enable(1);
 
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_CRC_Init();
+  // MX_CRC_Init();
   MX_DMA2D_Init();
   /* USER CODE BEGIN 2 */
 
@@ -113,12 +113,15 @@ int main(void)
 
   GUI_Clear();
   GUI_SetFont(&GUI_Font32_1);
-  GUI_DispString("Hello World\r\n");
+  GUI_DispString("Hello World Embedded\r\n");
   GUI_DispString("Working on STM32CUBEIDE\r\n");
-  GUI_Delay(100);
+  // GUI_Delay(100);
   GUI_DispString("Using STM32F7 Discovery Board\r\n");
+  GUI_X_Delay(1000);
+  GUI_Exec();
   while (1)
   {
+    GUI_Exec();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
