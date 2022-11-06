@@ -9,6 +9,11 @@
 *.pbd.linf
 *.o
 *.xcl
+*.ninja_deps
+*.ninja_log
+*.pbw
+*.ninja
+*.html
 
 # IAR Files
 *.dep
