@@ -22,6 +22,7 @@ typedef struct _RGB_Mixer_s
 /*---------------------------Private Variables--------------------------------*/
 static RGB_Mixer_s red, green, blue;
 static lv_obj_t *rectangle;
+static lv_style_t style;
 
 /*--------------------------Private Function Prototypes-----------------------*/
 static void slider_callback( lv_event_t *e );
@@ -30,6 +31,11 @@ static void slider_callback( lv_event_t *e );
 void rgb_mixer_created_ui( void )
 {
   lv_obj_t *act_scr = lv_scr_act();                     // Get the active screen object
+
+  // intialize the styles
+  lv_style_init(&style);
+  // we have to enable other font sizes in menuconfig
+  lv_style_set_text_font(&style, &lv_font_montserrat_32); 
 
   // RED, Green and Blue Slider Configuration
   lv_obj_t *slider_r = lv_slider_create( act_scr );     // create a red slider base object
@@ -40,6 +46,11 @@ void rgb_mixer_created_ui( void )
   lv_obj_set_width( slider_r, LV_PCT(80) );
   lv_obj_set_width( slider_g, LV_PCT(80) );
   lv_obj_set_width( slider_b, LV_PCT(80) );
+
+  // Setting Sliders Height
+  lv_obj_set_height( slider_r, LV_PCT(4) );
+  lv_obj_set_height( slider_g, LV_PCT(4) );
+  lv_obj_set_height( slider_b, LV_PCT(4) );
   
   // Align Sliders with Each Other
   lv_obj_align( slider_r, LV_ALIGN_TOP_MID, 0u, LV_PCT(20) );
@@ -69,14 +80,16 @@ void rgb_mixer_created_ui( void )
 
   rectangle = lv_obj_create(act_scr);                   // Creates a base object Rectangle to display color
   lv_obj_set_size( rectangle, LV_PCT(93), LV_PCT(33) );
-  lv_obj_align_to( rectangle, slider_b, LV_ALIGN_TOP_MID, 0u, 30u );
+  lv_obj_align_to( rectangle, slider_b, LV_ALIGN_TOP_MID, 0u, 50u );
   lv_obj_set_style_border_color( rectangle, lv_color_black(), LV_PART_MAIN );   // add black border to rectangle
   lv_obj_set_style_border_width( rectangle, 2, LV_PART_MAIN );                  // increase the width of the border by 2px
+  lv_obj_set_style_bg_color( rectangle, lv_color_make( 0, 0, 0), LV_PART_MAIN); // all sliders are at zero, so background color should be black
 
   // Create Main Heading Label
   lv_obj_t *heading = lv_label_create(act_scr);
   lv_label_set_text( heading, "RGB Mixer");
   lv_obj_align( heading, LV_ALIGN_TOP_MID, 0u, LV_PCT(5) );
+  lv_obj_add_style( heading, &style, 0 );
 
   // Creating labels for individual slider current values
   red.slider_type = SLIDER_TYPE_RED;
