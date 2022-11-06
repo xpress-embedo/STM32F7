@@ -31,33 +31,44 @@ void rgb_mixer_created_ui( void )
 {
   lv_obj_t *act_scr = lv_scr_act();                     // Get the active screen object
 
-  // RED Slider Configuration
-  // Slider has three parts Main, Indicator and Knob
+  // RED, Green and Blue Slider Configuration
   lv_obj_t *slider_r = lv_slider_create( act_scr );     // create a red slider base object
-  lv_obj_align( slider_r, LV_ALIGN_TOP_MID, 0u, 30u);
+  lv_obj_t *slider_g = lv_slider_create( act_scr );     // create a green slider base object
+  lv_obj_t *slider_b = lv_slider_create( act_scr );     // create a blue slider base object
+
+  // Setting Sliders Width
+  lv_obj_set_width( slider_r, LV_PCT(80) );
+  lv_obj_set_width( slider_g, LV_PCT(80) );
+  lv_obj_set_width( slider_b, LV_PCT(80) );
+  
+  // Align Sliders with Each Other
+  lv_obj_align( slider_r, LV_ALIGN_TOP_MID, 0u, LV_PCT(20) );
+  lv_obj_align_to( slider_g, slider_r, LV_ALIGN_TOP_MID, 0u, 70u );
+  lv_obj_align_to( slider_b, slider_g, LV_ALIGN_TOP_MID, 0u, 70u );
+
+  // set slider range also (by default it is 0 to 100 but we want till 255)
+  lv_slider_set_range( slider_r, 0, 255 );
+  lv_slider_set_range( slider_g, 0, 255 );
+  lv_slider_set_range( slider_b, 0, 255 );
+  
+  // Coloring Sliders, Slider has three parts Main, Indicator and Knob
   // apply red color to the indicator part
   lv_obj_set_style_bg_color( slider_r, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR );
   // apply red color to the knob part
   lv_obj_set_style_bg_color( slider_r, lv_palette_main(LV_PALETTE_RED), LV_PART_KNOB );
 
-  // Green Slider Configuration
-  lv_obj_t *slider_g = lv_slider_create( act_scr );     // create a green slider base object
-  lv_obj_align_to( slider_g, slider_r, LV_ALIGN_TOP_MID, 0u, 50u );
   // apply green color to the indicator part
   lv_obj_set_style_bg_color( slider_g, lv_palette_main(LV_PALETTE_GREEN), LV_PART_INDICATOR );
   // apply green color to the knob part
   lv_obj_set_style_bg_color( slider_g, lv_palette_main(LV_PALETTE_GREEN), LV_PART_KNOB );
 
-  // BLUE Slider Configuration
-  lv_obj_t *slider_b = lv_slider_create( act_scr );     // create a blue slider base object
-  lv_obj_align_to( slider_b, slider_g, LV_ALIGN_TOP_MID, 0u, 50u );
   // apply blue color to the indicator part
   lv_obj_set_style_bg_color( slider_b, lv_palette_main(LV_PALETTE_BLUE), LV_PART_INDICATOR );
   // apply blue color to the knob part
   lv_obj_set_style_bg_color( slider_b, lv_palette_main(LV_PALETTE_BLUE), LV_PART_KNOB );
 
   rectangle = lv_obj_create(act_scr);                   // Creates a base object Rectangle to display color
-  lv_obj_set_size( rectangle, 300u, 60u );
+  lv_obj_set_size( rectangle, LV_PCT(93), LV_PCT(33) );
   lv_obj_align_to( rectangle, slider_b, LV_ALIGN_TOP_MID, 0u, 30u );
   lv_obj_set_style_border_color( rectangle, lv_color_black(), LV_PART_MAIN );   // add black border to rectangle
   lv_obj_set_style_border_width( rectangle, 2, LV_PART_MAIN );                  // increase the width of the border by 2px
@@ -65,7 +76,7 @@ void rgb_mixer_created_ui( void )
   // Create Main Heading Label
   lv_obj_t *heading = lv_label_create(act_scr);
   lv_label_set_text( heading, "RGB Mixer");
-  lv_obj_align( heading, LV_ALIGN_TOP_MID, 0u, 1u );
+  lv_obj_align( heading, LV_ALIGN_TOP_MID, 0u, LV_PCT(5) );
 
   // Creating labels for individual slider current values
   red.slider_type = SLIDER_TYPE_RED;
@@ -88,11 +99,6 @@ void rgb_mixer_created_ui( void )
   lv_obj_add_event_cb( slider_r, slider_callback, LV_EVENT_VALUE_CHANGED, &red );
   lv_obj_add_event_cb( slider_g, slider_callback, LV_EVENT_VALUE_CHANGED, &green );
   lv_obj_add_event_cb( slider_b, slider_callback, LV_EVENT_VALUE_CHANGED, &blue );
-
-  // set slider range also (by default it is 0 to 100 but we want till 255)
-  lv_slider_set_range( slider_r, 0, 255 );
-  lv_slider_set_range( slider_g, 0, 255 );
-  lv_slider_set_range( slider_b, 0, 255 );
 }
 
 /*--------------------------Private Function Definitions----------------------*/
