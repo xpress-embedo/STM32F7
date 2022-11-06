@@ -209,9 +209,12 @@ void DSI_IRQHandler(void)
   /* USER CODE BEGIN DSI_IRQn 0 */
 
   /* USER CODE END DSI_IRQn 0 */
-  HAL_DSI_IRQHandler();
   /* USER CODE BEGIN DSI_IRQn 1 */
-  // TODO: XS this is not correct
+  // NOTE: by default CubeMX generates the function call as
+  // HAL_DSI_IRQHandler() without the parameter/argument
+  // to fix this change CubeMx setting by going into NVIC
+  // Code Generation tab & un-check the Call Handler for DSI
+  HAL_DSI_IRQHandler( &hdsi_discovery );
   /* USER CODE END DSI_IRQn 1 */
 }
 
