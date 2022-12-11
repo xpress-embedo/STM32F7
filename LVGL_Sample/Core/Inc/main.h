@@ -51,6 +51,11 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
+void   MX_GPIO_Init(void);
+void   MX_FMC_Init(void);
+void   MX_DMA2D_Init(void);
+void   MX_DSIHOST_DSI_Init(void);
+void   MX_LTDC_Init(void);
 
 /* USER CODE BEGIN EFP */
 
@@ -369,11 +374,7 @@ void Error_Handler(void);
 #define ARDUINO_MISO_D12_GPIO_Port GPIOB
 #define ARDUINO_MOSI_PWM_D11_Pin GPIO_PIN_15
 #define ARDUINO_MOSI_PWM_D11_GPIO_Port GPIOB
-void   MX_GPIO_Init(void);
-void   MX_FMC_Init(void);
-void   MX_DMA2D_Init(void);
-void   MX_DSIHOST_DSI_Init(void);
-void   MX_LTDC_Init(void);
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
