@@ -46,7 +46,12 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
+#define COVER(x)                do {      \
+                                      x;  \
+                                } while(0)
 
+#define TRUE                    (0x01)
+#define FALSE                   (0x00)
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/

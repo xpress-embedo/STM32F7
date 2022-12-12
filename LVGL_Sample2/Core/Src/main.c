@@ -41,13 +41,37 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+#define DEBUG_BUFFER_SIZE         (50u)
 
+#define LED_TASK_TIME             (1000u) /* In milliseconds */
+#define LVGL_TASK_TIME            (5u)    /* In milliseconds */
+#define DISP_MNG_TASK_TIME        (100u)  /* In milliseconds */
+#define TRIG_ADC_CONV_TASK_TIME   (100u)  /* In milliseconds */
+#define DEBUG_PRINT_TASK_TIME     (1000u) /* In milliseconds */
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+static uint8_t led_state = FALSE;
+static uint32_t led_timestamp = 0u;
+static uint32_t lvgl_timestamp = 0u;
+static uint32_t disp_mng_timestamp = 0u;
+static uint32_t trig_adc_conv_timestamp = 0u;
+static uint32_t debug_print_timestamp = 0u;
 
+static uint8_t adc_data;
+static uint8_t adc_busy = FALSE;
+// ADC Triggering Task Time is 100ms, this means that to get 1 second counts
+// we need to store 10 samples which are 100ms apart from each other
+static uint8_t temp_sensor[10u] = { 0x00 };
+static uint8_t temp_sensor_idx = 0u;
+// the above samples are averaged and stored in the below array
+static uint8_t temp_sensor_1sec[260] = { 0 };   // 320-60
+static uint16_t temp_sensor_1sec_idx = 0u;
+
+uint16_t dbg_size = 0u;
+char dbg_buffer[DEBUG_BUFFER_SIZE] = { 0 };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -101,7 +125,13 @@ int main(void)
 
   // lv_example_get_started_1();
   // lv_demo_widgets();
-  Display_Mng();
+  // Display_Mng();
+  led_state = FALSE;
+
+  lvgl_timestamp = HAL_GetTick();
+  led_timestamp = HAL_GetTick();
+  trig_adc_conv_timestamp = HAL_GetTick();
+  debug_print_timestamp = HAL_GetTick();
 
   /* USER CODE END 2 */
 
@@ -109,10 +139,53 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    HAL_GPIO_TogglePin(LD_USER1_GPIO_Port, LD_USER1_Pin );
-    HAL_GPIO_TogglePin(LD_USER2_GPIO_Port, LD_USER2_Pin );
-    HAL_Delay(5);
-    lv_timer_handler();
+    /* Task for Triggering ADC Conversion Start */
+    if( HAL_GetTick() - trig_adc_conv_timestamp > TRIG_ADC_CONV_TASK_TIME )
+    {
+      // TODO: XS
+      trig_adc_conv_timestamp = HAL_GetTick();
+    }
+
+    /* Task for Printing debug information */
+    if( HAL_GetTick() - debug_print_timestamp > DEBUG_PRINT_TASK_TIME )
+    {
+      debug_print_timestamp = HAL_GetTick();
+      // TODO: XS for future
+    }
+
+    /* Task Display Manager */
+    if( HAL_GetTick() - disp_mng_timestamp > DISP_MNG_TASK_TIME )
+    {
+      disp_mng_timestamp = HAL_GetTick();
+      Display_Mng();
+    }
+
+    /* Task for LVGL */
+    if( HAL_GetTick() - lvgl_timestamp > LVGL_TASK_TIME )
+    {
+      lvgl_timestamp = HAL_GetTick();
+      lv_timer_handler();
+    }
+
+    /* Task for Leds */
+    if( HAL_GetTick() - led_timestamp > LED_TASK_TIME )
+    {
+      led_timestamp = HAL_GetTick();
+      if( led_state )
+      {
+        led_state = FALSE;
+        /* Setting Pin High will turn off the Led */
+        HAL_GPIO_WritePin(LD_USER1_GPIO_Port, LD_USER1_Pin, GPIO_PIN_RESET );
+        HAL_GPIO_WritePin(LD_USER2_GPIO_Port, LD_USER2_Pin, GPIO_PIN_RESET );
+      }
+      else
+      {
+        led_state = TRUE;
+        /* Setting Pin Low will turn on the Led */
+        HAL_GPIO_WritePin(LD_USER1_GPIO_Port, LD_USER1_Pin, GPIO_PIN_SET );
+        HAL_GPIO_WritePin(LD_USER2_GPIO_Port, LD_USER2_Pin, GPIO_PIN_SET );
+      }
+    }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
