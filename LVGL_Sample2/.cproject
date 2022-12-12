@@ -113,8 +113,6 @@
 						<entry excluding="STM32F769i_Discovery/stm32f769i_discovery_sd.h|STM32F769i_Discovery/stm32f769i_discovery_sd.c|STM32F769i_Discovery/stm32f769i_discovery_qspi.h|STM32F769i_Discovery/stm32f769i_discovery_qspi.c|STM32F769i_Discovery/stm32f769i_discovery_audio.h|STM32F769i_Discovery/stm32f769i_discovery_audio.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="BSP"/>
 						<entry excluding="BSP/STM32F769i_Discovery/stm32f769i_discovery_sd.h|BSP/STM32F769i_Discovery/stm32f769i_discovery_sd.c|BSP/STM32F769i_Discovery/stm32f769i_discovery_qspi.h|BSP/STM32F769i_Discovery/stm32f769i_discovery_qspi.c|BSP/STM32F769i_Discovery/stm32f769i_discovery_audio.h|BSP/STM32F769i_Discovery/stm32f769i_discovery_audio.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="ThirdParty/LVGL"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="ThirdParty/lvgl"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="hal_stm_lvgl"/>
 					</sourceEntries>
 				</configuration>
