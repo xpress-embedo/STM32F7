@@ -31,7 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -381,7 +381,7 @@ void   MX_LTDC_Init(void);
 #define ARDUINO_MOSI_PWM_D11_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-
+uint8_t * Display_GetTempData( void );
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

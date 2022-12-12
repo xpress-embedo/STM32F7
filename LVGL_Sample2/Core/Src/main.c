@@ -53,6 +53,8 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 
+UART_HandleTypeDef huart1;
+
 /* USER CODE BEGIN PV */
 static uint8_t led_state = FALSE;
 static uint32_t led_timestamp = 0u;
@@ -78,6 +80,7 @@ char dbg_buffer[DEBUG_BUFFER_SIZE] = { 0 };
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_ADC1_Init(void);
+static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -94,7 +97,8 @@ static void MX_ADC1_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+  uint16_t idx = 0;
+  uint32_t temp = 0;
   /* USER CODE END 1 */
 
   /* Enable I-Cache---------------------------------------------------------*/
@@ -121,6 +125,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_ADC1_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   lv_init();
   tft_init();
@@ -134,6 +139,8 @@ int main(void)
   led_timestamp = HAL_GetTick();
   trig_adc_conv_timestamp = HAL_GetTick();
   debug_print_timestamp = HAL_GetTick();
+  // Start ADC Conversion
+  HAL_ADC_Start_IT(&hadc1);
 
   /* USER CODE END 2 */
 
@@ -146,6 +153,61 @@ int main(void)
     {
       // TODO: XS
       trig_adc_conv_timestamp = HAL_GetTick();
+      if( adc_busy == TRUE )
+      {
+        // memset( dbg_buffer, 0x00, DEBUG_BUFFER_SIZE );
+        // dbg_size = snprintf(dbg_buffer, DEBUG_BUFFER_SIZE, "Red = %d, Green = %d, Blue = %d \r\n", adc_data[0], adc_data[1], adc_data[2] );
+        // dbg_size = snprintf(dbg_buffer, DEBUG_BUFFER_SIZE, "Temp.=%d, Idx=%d, millis=%ld\r\n", adc_data[3], temp_sensor_idx, HAL_GetTick() );
+        // HAL_UART_Transmit(&huart1, (uint8_t*)dbg_buffer, dbg_size, 1000u);
+
+        // Storing Temperature Data
+        if( temp_sensor_idx < 10u )
+        {
+          // store the data in buffer
+          temp_sensor[temp_sensor_idx] = adc_data;
+          temp_sensor_idx++;
+          // this means that 1 second is elapsed and the buffer is full now
+          if( temp_sensor_idx >= 10u )
+          {
+            // reset the counter
+            temp_sensor_idx = 0u;
+            // now average the samples and store in 1 second array
+            temp = 0u;
+            // cumulative sum
+            for( idx=0; idx<10u; idx++ )
+            {
+              temp = temp + temp_sensor[idx];
+            }
+            // averaging
+            temp = temp/10u;
+            if( temp_sensor_1sec_idx < 260u )
+            {
+              // convert data to temperature and store in array
+              temp = (uint8_t)((uint16_t)((uint16_t)temp * (uint16_t)330)/255);
+              temp_sensor_1sec[temp_sensor_1sec_idx] = (uint8_t)(temp);
+              memset( dbg_buffer, 0x00, DEBUG_BUFFER_SIZE );
+              dbg_size = snprintf(dbg_buffer, DEBUG_BUFFER_SIZE, "Index = %d, Temperature = %ld\r\n", temp_sensor_1sec_idx, temp );
+              HAL_UART_Transmit(&huart1, (uint8_t*)dbg_buffer, dbg_size, 1000u);
+              temp_sensor_1sec_idx++;
+              if( temp_sensor_1sec_idx >= 260u )
+              {
+                // reset the index if buffer is full
+                temp_sensor_1sec_idx = 0u;
+              }
+            }
+          }
+        }
+
+        adc_busy = FALSE;
+        // Trigger Conversion Again
+        HAL_ADC_Start_IT(&hadc1);
+      }
+      else
+      {
+        // memset( dbg_buffer, 0x00, DEBUG_BUFFER_SIZE );
+        // dbg_size = snprintf(dbg_buffer, DEBUG_BUFFER_SIZE, "%s\r\n", "ADC Busy Shouldn't Happen" );
+        // HAL_UART_Transmit(&huart1, (uint8_t*)dbg_buffer, dbg_size, 1000u);
+      }
     }
 
     /* Task for Printing debug information */
@@ -300,7 +362,58 @@ static void MX_ADC1_Init(void)
 
 }
 
+/**
+  * @brief USART1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART1_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART1_Init 0 */
+
+  /* USER CODE END USART1_Init 0 */
+
+  /* USER CODE BEGIN USART1_Init 1 */
+
+  /* USER CODE END USART1_Init 1 */
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = 115200;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART1_Init 2 */
+
+  /* USER CODE END USART1_Init 2 */
+
+}
+
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  Regular conversion complete callback in non blocking mode
+  * @param  hadc pointer to a ADC_HandleTypeDef structure that contains
+  *         the configuration information for the specified ADC.
+  * @retval None
+  */
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+  adc_data = HAL_ADC_GetValue(hadc);
+  adc_busy = TRUE;
+}
+
+uint8_t * Display_GetTempData( void )
+{
+  return temp_sensor_1sec;
+}
 
 /* USER CODE END 4 */
 

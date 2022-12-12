@@ -151,6 +151,16 @@
 			<location>C:/Users/xpress_embedo/STM32Cube/Repository/STM32Cube_FW_F7_V1.17.0/Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_tim_ex.c</location>
 		</link>
 		<link>
+			<name>Drivers/STM32F7xx_HAL_Driver/stm32f7xx_hal_uart.c</name>
+			<type>1</type>
+			<location>C:/Users/xpress_embedo/STM32Cube/Repository/STM32Cube_FW_F7_V1.17.0/Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart.c</location>
+		</link>
+		<link>
+			<name>Drivers/STM32F7xx_HAL_Driver/stm32f7xx_hal_uart_ex.c</name>
+			<type>1</type>
+			<location>C:/Users/xpress_embedo/STM32Cube/Repository/STM32Cube_FW_F7_V1.17.0/Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_hal_uart_ex.c</location>
+		</link>
+		<link>
 			<name>Drivers/STM32F7xx_HAL_Driver/stm32f7xx_ll_fmc.c</name>
 			<type>1</type>
 			<location>C:/Users/xpress_embedo/STM32Cube/Repository/STM32Cube_FW_F7_V1.17.0/Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_fmc.c</location>
