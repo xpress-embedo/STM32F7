@@ -125,7 +125,6 @@ int main(void)
 
   // lv_example_get_started_1();
   // lv_demo_widgets();
-  // Display_Mng();
   led_state = FALSE;
 
   lvgl_timestamp = HAL_GetTick();
