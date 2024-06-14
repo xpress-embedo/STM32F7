@@ -56,11 +56,11 @@ extern "C" {
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
-void   MX_GPIO_Init(void);
-void   MX_FMC_Init(void);
-void   MX_DMA2D_Init(void);
-void   MX_DSIHOST_DSI_Init(void);
-void   MX_LTDC_Init(void);
+void MX_GPIO_Init(void);
+void MX_FMC_Init(void);
+void MX_DMA2D_Init(void);
+void MX_DSIHOST_DSI_Init(void);
+void MX_LTDC_Init(void);
 
 /* USER CODE BEGIN EFP */
 
